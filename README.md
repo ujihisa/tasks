@@ -1,5 +1,7 @@
 # Tasks -- Better Process Manager for Ruby
 
+![Traffic Control](http://farm4.static.flickr.com/3118/3204377933_8c978370db.jpg)
+
 ## spawn
 
 `tasks` provides `spawn` even in ruby 1.8.
