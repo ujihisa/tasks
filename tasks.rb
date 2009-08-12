@@ -3,7 +3,7 @@ module Tasks
 
   def spawn(cmd)
     a = IO.popen(cmd)
-    Thread.start do
+    fork do
       while b = a.gets
         puts b
       end
