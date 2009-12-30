@@ -12,13 +12,11 @@ module Tasks
   end
 
   def love_pact(master, slave, interval = 2)
-    loop do
-      pss = `ps aux`.split(/\n/).map {|i| i.split }
-      if pss.select {|ps| ps[1] == master }.empty?
-        system "kill -KILL #{slave}"
-        return
-      end
+    loop {
+      Process.kill 0, master
       sleep interval
-    end
+    }
+  rescue Errno::ESRCH
+    Process.kill "KILL", slave
   end
 end
