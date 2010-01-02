@@ -1,14 +1,8 @@
 module Tasks
   module_function
 
-  def spawn(cmd)
-    a = IO.popen(cmd)
-    fork do
-      while b = a.gets
-        puts b
-      end
-    end
-    a.pid
+  def spawn(*cmd)
+    fork { exec(*cmd) }
   end
 
   def love_pact(master, slave, interval = 2)
