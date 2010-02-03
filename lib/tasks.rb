@@ -33,4 +33,21 @@ module Tasks
   rescue Errno::ESRCH
     Process.kill "KILL", slave
   end
+
+  # Kills a process's all children
+  #     require 'lib/tasks'; include Tasks
+  #     pid = spawn 'sleep 10 | head'
+  #     kill_children(pid)
+  #
+  #     system 'ps aux | grep slee'
+  def kill_children(parent_pid)
+    a = `ps ax -o pid,command,ppid`.split(/\n/)[1..-1]
+    pss = a.map {|i| i.strip.split(/\s+/, 3) }.select {|i| i[1].to_i == parent_pid }.map {|i| i[0] }
+    pss.each {|i|
+      begin
+        Process.kill 'KILL', i.to_i
+      rescue Errno::ESRCH => e
+      end
+    }
+  end
 end
